@@ -17,7 +17,7 @@ func PFlagVisitor(m *mango.ManPage) func(*pflag.Flag) {
 	}
 }
 
-// FlagVisitor is used to visit all flags and track them in a mango.Command.
+// PFlagCommandVisitor is used to visit all flags and track them in a mango.Command.
 func PFlagCommandVisitor(c *mango.Command) func(*pflag.Flag) {
 	return func(f *pflag.Flag) {
 		_ = c.AddFlag(mango.Flag{
