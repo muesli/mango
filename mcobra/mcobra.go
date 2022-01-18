@@ -38,6 +38,11 @@ func addCommandTree(m *mango.ManPage, c *cobra.Command, parent *mango.Command) e
 	// add commands
 	if c.HasSubCommands() {
 		for _, sub := range c.Commands() {
+			if sub.Hidden {
+				// ignore hidden commands
+				continue
+			}
+
 			if err := addCommandTree(m, sub, item); err != nil {
 				return err
 			}
