@@ -53,7 +53,7 @@ import (
     "fmt"
 
     "github.com/muesli/mango"
-    "github.com/muesli/mango/mpflag"
+    mpflag "github.com/muesli/mango-pflag"
     "github.com/muesli/roff"
     flag "github.com/spf13/pflag"
 )
