@@ -10,8 +10,8 @@ import (
 )
 
 var (
-	one = flag.String("one", "", "first value")
-	two = flag.String("two", "", "second value")
+	one = flag.String("one", "", "first value")  //nolint
+	two = flag.String("two", "", "second value") //nolint
 )
 
 func main() {
