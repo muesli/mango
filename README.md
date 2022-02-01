@@ -8,6 +8,14 @@ mango is a man-page generator for the Go flag, pflag, and cobra packages. It
 extracts commands, flags, and arguments from your program and enables it to
 self-document.
 
+## Adapters
+
+Currently the following adapters exist:
+
+- flag: support for Go's standard flag package
+- [mango-cobra](https://github.com/muesli/mango-cobra): an adapter for [cobra](https://github.com/spf13/cobra)
+- [mango-pflag](https://github.com/muesli/mango-pflag): an adapter for the [pflag](https://github.com/spf13/pflag) package
+
 ## Usage with flag:
 
 ```go
