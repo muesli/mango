@@ -1,5 +1,6 @@
 # mango
 
+[![Latest Release](https://img.shields.io/github/release/muesli/mango.svg)](https://github.com/muesli/mango/releases)
 [![Build Status](https://github.com/muesli/mango/workflows/build/badge.svg)](https://github.com/muesli/mango/actions)
 [![Go ReportCard](https://goreportcard.com/badge/muesli/mango)](https://goreportcard.com/report/muesli/mango)
 [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/muesli/mango)
