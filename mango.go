@@ -46,7 +46,7 @@ func NewManPage(section uint, title string, description string) *ManPage {
 	return &ManPage{
 		Root:        *root,
 		section:     section,
-		description: description,
+		description: title + " - " + description,
 	}
 }
 
