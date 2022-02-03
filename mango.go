@@ -197,7 +197,7 @@ func (m ManPage) Build(w Builder) string {
 	w.Heading(m.section, m.Root.Name, m.description, time.Now())
 
 	w.Section("Name")
-	w.Text(m.description)
+	w.Text(m.Root.Name + " - " + m.description)
 
 	w.Section("Synopsis")
 	w.TextBold(m.Root.Name)
