@@ -38,7 +38,7 @@ var (
 func main() {
     flag.Parse()
 
-    manPage := mango.NewManPage(1, "mango", "mango - a man-page generator").
+    manPage := mango.NewManPage(1, "mango", "a man-page generator").
         WithLongDescription("mango is a man-page generator for Go.\n"+
             "Features:\n"+
             "* User-friendly\n"+
@@ -71,7 +71,7 @@ import (
 func main() {
     flag.Parse()
 
-    manPage := mango.NewManPage(1, "mango", "mango - a man-page generator").
+    manPage := mango.NewManPage(1, "mango", "a man-page generator").
         WithLongDescription("mango is a man-page generator for Go.").
         WithSection("Copyright", "(C) 2022 Christian Muehlhaeuser.\n"+
             "Released under MIT license.")

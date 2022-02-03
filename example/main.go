@@ -17,7 +17,7 @@ var (
 func main() {
 	flag.Parse()
 
-	manPage := mango.NewManPage(1, "mango", "mango - a man-page generator").
+	manPage := mango.NewManPage(1, "mango", "a man-page generator").
 		WithLongDescription("mango is a man-page generator for the Go flag, pflag, and cobra packages.\n"+
 			"Features:\n"+
 			"* User-friendly\n"+
