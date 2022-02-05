@@ -124,7 +124,7 @@ func (m ManPage) buildCommand(w Builder, c Command) {
 			}
 
 			if opt.Short != "" {
-				w.TextBold(fmt.Sprintf("%[1]s%[2]s %[1]s%[3]s", prefix, opt.Short, opt.Name))
+				w.TextBold(fmt.Sprintf("-%[2]s, %[1]s%[3]s", prefix, opt.Short, opt.Name))
 			} else {
 				w.TextBold(prefix + opt.Name)
 			}
