@@ -1,10 +1,10 @@
 # mango
 
 [![Latest Release](https://img.shields.io/github/release/muesli/mango.svg?style=for-the-badge)](https://github.com/muesli/mango/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](/LICENSE)
 [![Build Status](https://img.shields.io/github/workflow/status/muesli/mango/build?style=for-the-badge)](https://github.com/muesli/mango/actions)
 [![Go ReportCard](https://goreportcard.com/badge/github.com/muesli/mango?style=for-the-badge)](https://goreportcard.com/report/muesli/mango)
 [![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=for-the-badge)](https://pkg.go.dev/github.com/muesli/mango)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=for-the-badge)](/LICENSE)
 
 mango is a man-page generator for the Go flag, pflag, cobra, and coral packages.
 It extracts commands, flags, and arguments from your program and enables it to
