@@ -17,6 +17,7 @@ Currently the following adapters exist:
 - flag: support for Go's standard flag package
 - [mango-cobra](https://github.com/muesli/mango-cobra): an adapter for [cobra](https://github.com/spf13/cobra)
 - [mango-coral](https://github.com/muesli/mango-coral): an adapter for [coral](https://github.com/muesli/coral)
+- [mango-kong](https://github.com/alecthomas/mango-kong): an adapter for [kong](https://github.com/alecthomas/kong)
 - [mango-pflag](https://github.com/muesli/mango-pflag): an adapter for the [pflag](https://github.com/spf13/pflag) package
 
 ## Usage with flag:
