@@ -22,6 +22,7 @@ type Command struct {
 	Name     string
 	Short    string
 	Usage    string
+	Example  string
 	Flags    map[string]Flag
 	Commands map[string]*Command
 }
@@ -172,6 +173,24 @@ func (m ManPage) buildCommand(w Builder, c Command) {
 		}
 
 		if c.Name == m.Root.Name {
+		} else {
+			w.IndentEnd()
+		}
+	}
+
+	if c.Example != "" {
+		if c.Name == m.Root.Name {
+			w.Section("Examples")
+			w.TaggedParagraph(-1)
+		} else {
+			w.TaggedParagraph(-1)
+			w.TextBold("EXAMPLES")
+			w.Indent(4)
+		}
+		w.Text(c.Example)
+
+		if c.Name == m.Root.Name {
+			w.EndSection()
 		} else {
 			w.IndentEnd()
 		}
