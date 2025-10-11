@@ -226,8 +226,10 @@ func (m ManPage) Build(w Builder) string {
 	w.TextItalic("argument...")
 	w.Text("]")
 
-	w.Section("Description")
-	w.Text(m.longDescription)
+	if m.longDescription != "" {
+		w.Section("Description")
+		w.Text(m.longDescription)
+	}
 
 	m.buildCommand(w, m.Root)
 
