@@ -108,7 +108,7 @@ func (m *Command) AddCommand(c *Command) error {
 // buildSynopsis formats a synopsis line by writing the command name in bold
 // and the arguments inside brackets in italic.
 func (m ManPage) buildSynopsis(w Builder, synopsis string) {
-	name, args, found := strings.Cut(synopsis, " ")
+	name, args, found := strings.Cut(strings.TrimSpace(synopsis), " ")
 	w.TextBold(name)
 	if found {
 		w.Text(" ")
