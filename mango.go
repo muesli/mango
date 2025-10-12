@@ -13,6 +13,7 @@ type ManPage struct {
 	Root            Command
 	sections        []Section
 	section         uint
+	synopsis        string
 	description     string
 	longDescription string
 }
@@ -62,6 +63,13 @@ func NewCommand(name string, short string, usage string) *Command {
 	}
 }
 
+// WithSynopsis overrides the default synopsis. It expects a single line
+// with the first word being the command name.
+func (m *ManPage) WithSynopsis(synopsis string) *ManPage {
+	m.synopsis = synopsis
+	return m
+}
+
 // WithLongDescription sets the long description.
 func (m *ManPage) WithLongDescription(desc string) *ManPage {
 	m.longDescription = desc
@@ -95,6 +103,34 @@ func (m *Command) AddCommand(c *Command) error {
 
 	m.Commands[c.Name] = c
 	return nil
+}
+
+// buildSynopsis formats a synopsis line by writing the command name in bold
+// and the arguments inside brackets in italic.
+func (m ManPage) buildSynopsis(w Builder, synopsis string) {
+	name, args, found := strings.Cut(synopsis, " ")
+	w.TextBold(name)
+	if found {
+		w.Text(" ")
+	}
+	for {
+		lBracket := strings.Index(args, "[")
+		if lBracket == -1 {
+			w.Text(args)
+			break
+		}
+		w.Text(args[:lBracket])
+		args = args[lBracket:]
+		rBracket := strings.Index(args, "]")
+		if rBracket == -1 {
+			w.Text(args)
+			break
+		}
+		w.Text("[")
+		w.TextItalic(args[1:rBracket])
+		w.Text("]")
+		args = args[rBracket+1:]
+	}
 }
 
 func (m ManPage) buildCommand(w Builder, c Command) {
@@ -219,12 +255,16 @@ func (m ManPage) Build(w Builder) string {
 	w.Text(m.Root.Name + " - " + m.description)
 
 	w.Section("Synopsis")
-	w.TextBold(m.Root.Name)
-	w.Text(" [")
-	w.TextItalic("options...")
-	w.Text("] [")
-	w.TextItalic("argument...")
-	w.Text("]")
+	if m.synopsis == "" {
+		w.TextBold(m.Root.Name)
+		w.Text(" [")
+		w.TextItalic("options...")
+		w.Text("] [")
+		w.TextItalic("argument...")
+		w.Text("]")
+	} else {
+		m.buildSynopsis(w, m.synopsis)
+	}
 
 	w.Section("Description")
 	w.Text(m.longDescription)
