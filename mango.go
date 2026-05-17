@@ -3,10 +3,29 @@ package mango
 import (
 	"errors"
 	"fmt"
+	"os"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
+
+// buildTime returns the time to stamp on the generated man page. It honors
+// the SOURCE_DATE_EPOCH environment variable (see
+// https://reproducible-builds.org/specs/source-date-epoch/) so the output is
+// stable across builds. Falls back to time.Now() when the variable is unset
+// or unparseable.
+func buildTime() time.Time {
+	epoch := os.Getenv("SOURCE_DATE_EPOCH")
+	if epoch == "" {
+		return time.Now()
+	}
+	sec, err := strconv.ParseInt(epoch, 10, 64)
+	if err != nil {
+		return time.Now()
+	}
+	return time.Unix(sec, 0).UTC()
+}
 
 // ManPage represents a man page generator.
 type ManPage struct {
@@ -213,7 +232,7 @@ func (m ManPage) Build(w Builder) string {
 	   - see also
 	*/
 
-	w.Heading(m.section, m.Root.Name, m.description, time.Now())
+	w.Heading(m.section, m.Root.Name, m.description, buildTime())
 
 	w.Section("Name")
 	w.Text(m.Root.Name + " - " + m.description)
