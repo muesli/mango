@@ -6,17 +6,18 @@
 [![Go ReportCard](https://goreportcard.com/badge/github.com/muesli/mango?style=for-the-badge)](https://goreportcard.com/report/muesli/mango)
 [![Go Doc](https://img.shields.io/badge/godoc-reference-blue.svg?style=for-the-badge)](https://pkg.go.dev/github.com/muesli/mango)
 
-mango is a man-page generator for the Go flag, pflag, cobra, coral, and kong
+mango is a man-page generator for the Go flag, pflag, cobra, coral, ff, and kong
 packages. It extracts commands, flags, and arguments from your program and
 enables it to self-document.
 
 ## Adapters
 
-Currently the following adapters exist:
+Currently, the following adapters exist:
 
 - flag: support for Go's standard flag package
 - [mango-cobra](https://github.com/muesli/mango-cobra): an adapter for [cobra](https://github.com/spf13/cobra)
 - [mango-coral](https://github.com/muesli/mango-coral): an adapter for [coral](https://github.com/muesli/coral)
+- [mango-ff](https://github.com/StevenACoffman/mango-ff): an adapter for [ff](https://github.com/peterbourgon/ff)
 - [mango-kong](https://github.com/alecthomas/mango-kong): an adapter for [kong](https://github.com/alecthomas/kong)
 - [mango-pflag](https://github.com/muesli/mango-pflag): an adapter for the [pflag](https://github.com/spf13/pflag) package
 
@@ -142,6 +143,55 @@ func main() {
         "Released under MIT license.")
 
     fmt.Println(manPage.Build(roff.NewDocument()))
+}
+```
+
+Usage with ff:
+```go
+import (
+    "context"
+    "fmt"
+    "os"
+
+    mff "github.com/StevenACoffman/mango-ff"
+    "github.com/muesli/roff"
+    "github.com/peterbourgon/ff/v4"
+)
+
+func main() {
+    fs := ff.NewFlagSet("myapp")
+    man := fs.BoolLong("man", "print man page to stdout and exit")
+    // ... define other flags and subcommands ...
+
+    cmd := &ff.Command{
+        Name:      "myapp",
+        ShortHelp: "does something useful",
+        Flags:     fs,
+        // Subcommands: []*ff.Command{...},
+    }
+
+    if err := cmd.Parse(os.Args[1:], ff.WithEnvVarPrefix("MYAPP")); err != nil {
+        fmt.Fprintln(os.Stderr, err)
+        os.Exit(1)
+    }
+
+    if *man {
+        manPage, err := mff.NewManPage(1, cmd)
+        if err != nil {
+            fmt.Fprintln(os.Stderr, err)
+            os.Exit(1)
+        }
+        manPage = manPage.
+            WithSection("Authors", "Your Name <https://github.com/you/myapp>").
+            WithSection("Copyright", "Released under MIT license.")
+        fmt.Print(manPage.Build(roff.NewDocument()))
+        os.Exit(0)
+    }
+
+    if err := cmd.Run(context.Background()); err != nil {
+        fmt.Fprintln(os.Stderr, err)
+        os.Exit(1)
+    }
 }
 ```
 
