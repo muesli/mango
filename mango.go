@@ -3,10 +3,13 @@ package mango
 import (
 	"errors"
 	"fmt"
+	"os"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
+
 
 // ManPage represents a man page generator.
 type ManPage struct {
@@ -15,7 +18,20 @@ type ManPage struct {
 	section         uint
 	description     string
 	longDescription string
+	date            *time.Time
 }
+
+// WithDate sets the date of the man page.
+func (m *ManPage) WithDate(t time.Time) *ManPage {
+	m.date = &t
+	return m
+}
+
+// SetDate sets the date of the man page.
+func (m *ManPage) SetDate(t time.Time) {
+	m.date = &t
+}
+
 
 // Command represents a command.
 type Command struct {
@@ -213,7 +229,21 @@ func (m ManPage) Build(w Builder) string {
 	   - see also
 	*/
 
-	w.Heading(m.section, m.Root.Name, m.description, time.Now())
+	var date time.Time
+	if m.date != nil {
+		date = *m.date
+	} else if val := os.Getenv("SOURCE_DATE_EPOCH"); val != "" {
+		if epoch, err := strconv.ParseInt(val, 10, 64); err == nil {
+			date = time.Unix(epoch, 0).UTC()
+		} else {
+			date = time.Now()
+		}
+	} else {
+		date = time.Now()
+	}
+
+	w.Heading(m.section, m.Root.Name, m.description, date)
+
 
 	w.Section("Name")
 	w.Text(m.Root.Name + " - " + m.description)
