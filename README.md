@@ -44,7 +44,7 @@ func main() {
         WithLongDescription("mango is a man-page generator for Go.\n"+
             "Features:\n"+
             "* User-friendly\n"+
-            "* Plugable").
+            "* Pluggable").
         WithSection("Copyright", "(C) 2022 Christian Muehlhaeuser.\n"+
             "Released under MIT license.")
 
